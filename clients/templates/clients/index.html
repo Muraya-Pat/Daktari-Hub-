@@ -1,0 +1,200 @@
+<!-- clients/templates/clients/index.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 style="color: var(--daktari-pink);">
+            <i class="fas fa-users me-2"></i>Client Management
+        </h2>
+        <div>
+            <a href="{% url 'clients:register' %}" class="btn btn-daktari">
+                <i class="fas fa-user-plus me-2"></i>Add New Client
+            </a>
+        </div>
+    </div>
+    
+    <!-- Search and Filter Card -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q" placeholder="Search clients by name, ID or phone..." value="{{ request.GET.q }}">
+                        <button class="btn btn-outline-primary" type="submit">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" name="gender">
+                        <option value="">All Genders</option>
+                        <option value="M" {% if request.GET.gender == 'M' %}selected{% endif %}>Male</option>
+                        <option value="F" {% if request.GET.gender == 'F' %}selected{% endif %}>Female</option>
+                        <option value="O" {% if request.GET.gender == 'O' %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Clients Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm bg-primary bg-opacity-10">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">Total Clients</h6>
+                            <h3 class="mb-0">{{ total_clients }}</h3>
+                        </div>
+                        <div class="bg-primary bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-users fa-2x text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm bg-success bg-opacity-10">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">Active Clients</h6>
+                            <h3 class="mb-0">{{ active_clients }}</h3>
+                        </div>
+                        <div class="bg-success bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-user-check fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm bg-info bg-opacity-10">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">New This Month</h6>
+                            <h3 class="mb-0">{{ new_this_month }}</h3>
+                        </div>
+                        <div class="bg-info bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-user-clock fa-2x text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Clients Table -->
+    <div class="card border-0 shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Client ID</th>
+                            <th>Full Name</th>
+                            <th>National ID</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Contact</th>
+                            <th>Registered</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for client in clients %}
+                        <tr>
+                            <td>{{ client.id }}</td>
+                            <td>
+                                <a href="{% url 'clients:profile' client.id %}" class="text-decoration-none">
+                                    {{ client.first_name }} {{ client.last_name }}
+                                </a>
+                            </td>
+                            <td>{{ client.national_id }}</td>
+                            <td>{{ client.date_of_birth|timesince }}</td>
+                            <td>{{ client.get_gender_display }}</td>
+                            <td>
+                                {% if client.phone_number %}
+                                <a href="tel:{{ client.phone_number }}" class="text-decoration-none">
+                                    <i class="fas fa-phone-alt me-1"></i> {{ client.phone_number }}
+                                </a>
+                                {% endif %}
+                            </td>
+                            <td>{{ client.registered_at|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="{% url 'clients:profile' client.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                            </td>
+                                
+                                    
+                                       
+                                    
+                                    
+                                       
+                                    
+                                
+                            
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center py-4">
+                                <i class="fas fa-user-slash fa-2x mb-3" style="color: var(--daktari-blue);"></i>
+                                <h5>No clients found</h5>
+                                <p class="text-muted">Register your first client using the button above</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
