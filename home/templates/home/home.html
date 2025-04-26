@@ -10,17 +10,15 @@
                 <h1 class="display-4 fw-bold mb-3" style="color: var(--daktari-pink);">Welcome, Doctor</h1>
                 <p class="lead mb-4" style="color: #495057;">Manage client health programs efficiently with DaktariHub's comprehensive health information system.</p>
                 <div class="d-flex gap-3">
-                    <a href="#" class="btn btn-daktari btn-lg px-4">
+                    <a href="{% url 'clients:index' %}" class="btn btn-daktari btn-lg px-4">
                         <i class="fas fa-user-plus me-2"></i> Add Client
                     </a>
-                    <a href="#" class="btn btn-outline-primary btn-lg px-4">
+                    <a href="{% url 'programs:index' %}" class="btn btn-outline-primary btn-lg px-4">
                         <i class="fas fa-heartbeat me-2"></i> View Programs
                     </a>
                 </div>
             </div>
-            <div class="col-lg-6 d-none d-lg-block">
-                <img src="{% static 'images/hero-doctor.png' %}" alt="Healthcare Professionals" class="img-fluid" style="border-radius: 10px;">
-            </div>
+           
         </div>
     </div>
 </section>
@@ -37,14 +35,14 @@
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm hover-effect">
                     <div class="card-img-top bg-primary bg-opacity-10 p-4 text-center">
-                        <img src="{% static 'images/client-registration.jpg' %}" alt="Register Client" class="img-fluid" style="height: 120px;">
+                        <img src="{% static 'images/client-registration.jpg' %}" alt="Register Client" class="img-fluid" style="height: 150px;">
                     </div>
                     <div class="card-body text-center">
                         <h5 class="card-title" style="color: var(--daktari-pink);">
                             <i class="fas fa-user-plus me-2"></i>Register Client
                         </h5>
                         <p class="card-text">Add new clients to the health information system</p>
-                        <a href="#" class="btn btn-daktari btn-sm">
+                        <a href="{% url 'clients:index' %}" class="btn btn-daktari btn-sm">
                             Go <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -55,14 +53,14 @@
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm hover-effect">
                     <div class="card-img-top bg-success bg-opacity-10 p-4 text-center">
-                        <img src="{% static 'images/health-programs.jpg' %}" alt="Manage Programs" class="img-fluid" style="height: 120px;">
+                        <img src="{% static 'images/health-programs.jpg' %}" alt="Manage Programs" class="img-fluid" style="height: 150px;">
                     </div>
                     <div class="card-body text-center">
                         <h5 class="card-title" style="color: var(--daktari-pink);">
                             <i class="fas fa-heartbeat me-2"></i>Manage Programs
                         </h5>
                         <p class="card-text">Create and manage health programs like TB, Malaria, HIV</p>
-                        <a href="#" class="btn btn-daktari btn-sm">
+                        <a href="{% url 'programs:index' %}" class="btn btn-daktari btn-sm">
                             Go <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -73,14 +71,14 @@
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm hover-effect">
                     <div class="card-img-top bg-info bg-opacity-10 p-4 text-center">
-                        <img src="{% static 'images/client-search.jpg' %}" alt="Search Clients" class="img-fluid" style="height: 120px;">
+                        <img src="{% static 'images/enroll.jpg' %}" alt="Search Clients" class="img-fluid" style="height: 150px;">
                     </div>
                     <div class="card-body text-center">
                         <h5 class="card-title" style="color: var(--daktari-pink);">
-                            <i class="fas fa-search me-2"></i>Search Clients
+                            <i class="fas fa-clipboard-check me-2"></i>Enroll Clients
                         </h5>
-                        <p class="card-text">Find and view client records and program enrollments</p>
-                        <a href="#" class="btn btn-daktari btn-sm">
+                        <p class="card-text">Enroll registered clients to health programs</p>
+                        <a href="{% url 'programs:index' %}" class="btn btn-daktari btn-sm">
                             Go <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -90,55 +88,7 @@
     </div>
 </section>
 
-<!-- Recent Enrollments Section -->
-<section class="recent-enrollments mb-5">
-    <div class="container">
-        <div class="card border-0 shadow">
-            <div class="card-header bg-white border-0">
-                <h4 style="color: var(--daktari-pink);">
-                    <i class="fas fa-clock-rotate-left me-2"></i>Recent Enrollments
-                </h4>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Client</th>
-                                <th>Program</th>
-                                <th>Date Enrolled</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jane Doe</td>
-                                <td>Malaria Prevention</td>
-                                <td>Today, 10:45 AM</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td>John Smith</td>
-                                <td>HIV Management</td>
-                                <td>Yesterday, 2:30 PM</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td>Mary Johnson</td>
-                                <td>TB Treatment</td>
-                                <td>Yesterday, 11:15 AM</td>
-                                <td><span class="badge bg-warning">Pending</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="text-end mt-3">
-                    <a href="#" class="btn btn-outline-primary btn-sm">View All Enrollments</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <style>
     .hover-effect {
