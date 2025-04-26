@@ -132,6 +132,27 @@
             background-color: #e55a74;
             color: white;
         }
+        /* Activity Items */
+        .activity-item {
+             padding: 8px 0;
+             border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s;
+       }
+
+        .activity-item:hover {
+            background-color: rgba(255, 107, 139, 0.05);
+       }
+
+        .activity-item small {
+            color: var(--daktari-blue);
+            font-size: 0.75rem;
+       }
+
+        .activity-item p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            color: #495057;
+       }
     </style>
 </head>
 <body>
@@ -170,42 +191,49 @@
 
     <!-- Main Wrapper -->
     <div class="main-wrapper">
-        <!-- Sidebar -->
-        <aside class="daktari-sidebar d-none d-lg-block">
-            <h5 class="sidebar-title">
-                <i class="fas fa-bell"></i> Recent Activities
-            </h5>
-            
-            <div class="activity-list">
-                <div class="activity-item">
-                    <small class="text-muted">10 mins ago</small>
-                    <p>Dr. Mwangi enrolled 3 clients in Malaria program</p>
-                </div>
-                <div class="activity-item">
-                    <small class="text-muted">45 mins ago</small>
-                    <p>New client registered: Jane Doe</p>
-                </div>
-                <div class="activity-item">
-                    <small class="text-muted">2 hours ago</small>
-                    <p>TB program updated with new guidelines</p>
-                </div>
-                <div class="activity-item">
-                    <small class="text-muted">Yesterday</small>
-                    <p>System maintenance completed</p>
-                </div>
-            </div>
-            
-            <div class="mt-4">
-                <h5 class="sidebar-title">
-                    <i class="fas fa-chart-line"></i> Quick Stats
-                </h5>
-                <div class="p-3 bg-light rounded">
-                    <p><strong>Total Clients:</strong> 124</p>
-                    <p><strong>Active Programs:</strong> 8</p>
-                    <p><strong>Today's Enrollments:</strong> 5</p>
-                </div>
-            </div>
-        </aside>
+         <!-- Sidebar -->
+<aside class="daktari-sidebar d-none d-lg-block">
+    <h5 class="sidebar-title">
+        <i class="fas fa-bell"></i> Recent Activities
+    </h5>
+    
+    <div class="activity-list">
+        <!-- Recent Clients -->
+        {% for client in recent_clients %}
+        <div class="activity-item">
+            <small class="text-muted">{{ client.registered_at|timesince }} ago</small>
+            <p>New client registered: {{ client.first_name }} {{ client.last_name }}</p>
+        </div>
+        {% endfor %}
+        
+        <!-- Recent Programs -->
+        {% for program in recent_programs %}
+        <div class="activity-item">
+            <small class="text-muted">{{ program.created_at|timesince }} ago</small>
+            <p>New program added: {{ program.name }}</p>
+        </div>
+        {% endfor %}
+        
+        <!-- Recent Enrollments -->
+        {% for enrollment in recent_enrollments %}
+        <div class="activity-item">
+            <small class="text-muted">{{ enrollment.enrollment_date|timesince }} ago</small>
+            <p>{{ enrollment.client.first_name }} enrolled in {{ enrollment.program.name }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="mt-4">
+        <h5 class="sidebar-title">
+            <i class="fas fa-chart-line"></i> Quick Stats
+        </h5>
+        <div class="p-3 bg-light rounded">
+            <p><strong>Total Clients:</strong> {{ total_clients }}</p>
+            <p><strong>Active Programs:</strong> {{ active_programs }}</p>
+            <p><strong>Today's Enrollments:</strong> {{ todays_enrollments }}</p>
+        </div>
+    </div>
+</aside>
 
         <!-- Main Content -->
         <main class="main-content">
