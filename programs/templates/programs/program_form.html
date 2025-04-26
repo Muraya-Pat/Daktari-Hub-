@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0" style="box-shadow: 0 4px 20px rgba(255, 107, 139, 0.1); border-radius: 12px;">
+                <div class="card-header bg-white border-0 pt-4">
+                    <h3 class="text-center" style="color: var(--daktari-pink);">
+                        <i class="fas fa-heartbeat me-2"></i>Create Health Program
+                    </h3>
+                    <p class="text-center text-muted mt-2">Add a new health program to the system</p>
+                </div>
+                
+                <div class="card-body px-5 pb-5">
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Program Name -->
+                        <div class="mb-4">
+                            <label for="{{ form.name.id_for_label }}" class="form-label fw-semibold">
+                                <i class="fas fa-tag me-2" style="color: var(--daktari-pink);"></i>
+                                Program Name
+                            </label>
+                            {{ form.name }}
+                            <div class="form-text">e.g., Malaria Prevention, TB Treatment, HIV Care</div>
+                            <div class="invalid-feedback">
+                                Please provide a program name.
+                            </div>
+                        </div>
+                        
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold">
+                                <i class="fas fa-align-left me-2" style="color: var(--daktari-blue);"></i>
+                                Description
+                            </label>
+                            {{ form.description }}
+                            <div class="form-text">Briefly describe the program objectives</div>
+                        </div>
+                        
+                        <!-- Date Fields -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.start_date.id_for_label }}" class="form-label fw-semibold">
+                                    <i class="fas fa-calendar-day me-2" style="color: var(--daktari-pink);"></i>
+                                    Start Date
+                                </label>
+                                {{ form.start_date }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.end_date.id_for_label }}" class="form-label fw-semibold">
+                                    <i class="fas fa-calendar-check me-2" style="color: var(--daktari-blue);"></i>
+                                    End Date <span class="text-muted">(optional)</span>
+                                </label>
+                                {{ form.end_date }}
+                            </div>
+                        </div>
+                        
+                        <!-- Form Actions -->
+                        <div class="d-grid gap-3 mt-4">
+                            <button type="submit" class="btn btn-daktari py-2" style="border-radius: 8px;">
+                                <i class="fas fa-check-circle me-2"></i>Save Program
+                            </button>
+                            <a href="{% url 'programs:index' %}" class="btn btn-outline-secondary py-2" style="border-radius: 8px;">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom styling for date inputs -->
+<style>
+    /* Improve date input appearance */
+    input[type="date"] {
+        height: 46px;
+        padding: 8px 12px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        width: 100%;
+    }
+    
+    /* Textarea styling */
+    textarea {
+        min-height: 100px;
+        border-radius: 8px !important;
+    }
+    
+    /* Form control consistency */
+    .form-control {
+        border-radius: 8px;
+        padding: 10px 12px;
+    }
+</style>
+{% endblock %}

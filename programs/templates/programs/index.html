@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 style="color: var(--daktari-pink);">
+            <i class="fas fa-heartbeat me-2"></i>Health Programs
+        </h2>
+        <div>
+            <a href="{% url 'programs:create' %}" class="btn btn-daktari me-2">
+                <i class="fas fa-plus me-2"></i>New Program
+            </a>
+            <a href="{% url 'programs:enroll' %}" class="btn btn-outline-primary">
+                <i class="fas fa-user-plus me-2"></i>Enroll Client
+            </a>
+        </div>
+    </div>
+    
+    <!-- Search Card -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="q" placeholder="Search programs..." value="{{ request.GET.q }}">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Programs Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm bg-primary bg-opacity-10">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">Total Programs</h6>
+                            <h3 class="mb-0">{{ programs.count }}</h3>
+                        </div>
+                        <div class="bg-primary bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-heartbeat fa-2x text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm bg-success bg-opacity-10">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">Active Programs</h6>
+                            <h3 class="mb-0">{{ active_programs_count }}</h3>
+                        </div>
+                        <div class="bg-success bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-check-circle fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm bg-info bg-opacity-10">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">Total Enrollments</h6>
+                            <h3 class="mb-0">{{ total_enrollments }}</h3>
+                        </div>
+                        <div class="bg-info bg-opacity-25 p-3 rounded">
+                            <i class="fas fa-users fa-2x text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Programs Table -->
+    <div class="card border-0 shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Program Name</th>
+                            <th>Description</th>
+                            <th>Duration</th>
+                            <th>Enrollments</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for program in programs %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'programs:detail' program.id %}" class="text-decoration-none fw-bold">
+                                    {{ program.name }}
+                                </a>
+                            </td>
+                            <td>{{ program.description|truncatechars:50 }}</td>
+                            <td>
+                                {{ program.start_date|date:"M d, Y" }}
+                                {% if program.end_date %}
+                                - {{ program.end_date|date:"M d, Y" }}
+                                {% else %}
+                                (Ongoing)
+                                {% endif %}
+                            </td>
+                            <td>{{ program.enrollments.count }}</td>
+                            <td>
+                                <a href="{% url 'programs:detail' program.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4">
+                                <i class="fas fa-heartbeat fa-2x mb-3" style="color: var(--daktari-blue);"></i>
+                                <h5>No programs found</h5>
+                                <p class="text-muted">Create your first health program</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
