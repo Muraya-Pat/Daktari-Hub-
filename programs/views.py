@@ -28,6 +28,18 @@ class ProgramListView(ListView):
             
         return queryset.order_by('-created_at')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        today = timezone.now().date()
+        
+        # Active programs: either no end date or end date in future
+        context['active_programs_count'] = Program.objects.filter(
+            Q(end_date__gte=today) | Q(end_date__isnull=True)
+        ).count()
+        
+        context['total_enrollments'] = Enrollment.objects.count()
+        return context
+
 def create_program(request):
     if request.method == 'POST':
         form = ProgramForm(request.POST)
