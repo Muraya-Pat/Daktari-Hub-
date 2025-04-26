@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 style="color: var(--daktari-pink);">
+            <i class="fas fa-heartbeat me-2"></i>{{ program.name }}
+        </h2>
+        <div>
+            <a href="{% url 'programs:enroll' %}?program={{ program.id }}" class="btn btn-daktari">
+                <i class="fas fa-user-plus me-2"></i>Enroll Client
+            </a>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: var(--daktari-pink);">
+                        <i class="fas fa-info-circle me-2"></i>Program Details
+                    </h5>
+                    <p class="card-text">{{ program.description }}</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Start Date:</strong> {{ program.start_date|date:"M d, Y" }}
+                        </li>
+                        {% if program.end_date %}
+                        <li class="list-group-item">
+                            <strong>End Date:</strong> {{ program.end_date|date:"M d, Y" }}
+                        </li>
+                        {% endif %}
+                        <li class="list-group-item">
+                            <strong>Total Enrollments:</strong> {{ program.enrollments.count }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: var(--daktari-pink);">
+                        <i class="fas fa-chart-pie me-2"></i>Quick Stats
+                    </h5>
+                    <div class="p-3 bg-light rounded mb-3">
+                        <p><strong>Active Clients:</strong> {{ active_clients_count }}</p>
+                        <p><strong>New This Month:</strong> {{ new_enrollments_count }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card border-0 shadow">
+        <div class="card-header bg-white">
+            <h5 style="color: var(--daktari-pink);">
+                <i class="fas fa-users me-2"></i>Enrolled Clients
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Client Name</th>
+                            <th>National ID</th>
+                            <th>Enrollment Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for enrollment in enrollments %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'clients:profile' enrollment.client.id %}" class="text-decoration-none">
+                                    {{ enrollment.client.first_name }} {{ enrollment.client.last_name }}
+                                </a>
+                            </td>
+                            <td>{{ enrollment.client.national_id }}</td>
+                            <td>{{ enrollment.enrollment_date|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="{% url 'clients:profile' enrollment.client.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4">
+                                <i class="fas fa-user-slash fa-2x mb-3" style="color: var(--daktari-blue);"></i>
+                                <h5>No clients enrolled</h5>
+                                <p class="text-muted">Enroll clients using the button above</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
