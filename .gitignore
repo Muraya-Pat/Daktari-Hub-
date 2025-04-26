@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.env
+
+# VS Code
+.vscode/
+
+# Django
+db.sqlite3
+/media/
+/staticfiles/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+*.log
+
+# Database
+db.sqlite3
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Django migrations
+*/migrations/
+
+# Media and Static
+/media/
+/staticfiles/
+
+# VSCode settings
+.vscode/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
