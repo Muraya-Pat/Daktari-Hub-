@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-+4p@53#t0gf*7j0zjo^839q56^vclaf)i2*k(9hq)y@ci)ewge
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['daktarihub.pythonanywhere.com']
 
 
 # Application definition
@@ -125,6 +125,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+# Where collectstatic will put the files
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
