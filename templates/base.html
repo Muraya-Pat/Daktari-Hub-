@@ -181,9 +181,33 @@
                 
                 <!-- Login Button -->
                 <div>
-                    <button class="btn btn-daktari">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </button>
+                    {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <button class="btn btn-daktari dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> {{ user.username }}
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="userMenu">
+                            {% if user.is_superuser %}
+                                <li><a class="dropdown-item" href="{% url 'admin:index' %}">
+                                    <i class="fas fa-cog me-1"></i> Admin
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            {% endif %}
+                            <li>
+                                <form action="{% url 'logout' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="fas fa-sign-out-alt me-1"></i> Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-daktari">
+                        <i class="fas fa-sign-in-alt me-1"></i> Login
+                    </a>
+                {% endif %}
                 </div>
             </div>
         </div>
