@@ -7,7 +7,13 @@
     <div class="container py-5">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-3" style="color: var(--daktari-pink);">Welcome, Doctor</h1>
+                <h1 class="display-4 fw-bold mb-3" style="color: var(--daktari-pink);">
+                    {% if user.is_authenticated %}
+                        Welcome, Doctor {{ user.first_name|default:user.username }}
+                    {% else %}
+                        Welcome to DaktariHub
+                    {% endif %}
+                </h1>
                 <p class="lead mb-4" style="color: #495057;">Manage client health programs efficiently with DaktariHub's comprehensive health information system.</p>
                 <div class="d-flex gap-3">
                     <a href="{% url 'clients:index' %}" class="btn btn-daktari btn-lg px-4">
