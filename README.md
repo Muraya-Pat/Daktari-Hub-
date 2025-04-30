@@ -1,6 +1,6 @@
 # DaktariHub
 
-A health information system that allows doctors to manage clients nd programs information
+A health information system that allows doctors to manage clients and programs information
 
 #Features
 
@@ -25,6 +25,7 @@ Rest API framework
 python Anywhere (deployement)
 
 #Documentation
+
 [📄 View PDF](./Daktari_Hub_Presentation.pdf)
 
 #Live Demo
@@ -32,11 +33,16 @@ python Anywhere (deployement)
 visit: [https://daktarihub.pythonanywhere.com](https://daktarihub.pythonanywhere.com) 
 
 # How to run locally
+
 git clone https://github.com/Muraya-Pat/Daktari-Hub-.git
+
 cd Daktari-Hub-.git
+
 pip install -r requirements.txt
+
 python app.py
 
 #Author
+
 Patrick Muraya
 
