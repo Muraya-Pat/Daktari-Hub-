@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 {% block content %}
 <!-- Hero Section -->
@@ -93,48 +94,5 @@
         </div>
     </div>
 </section>
-
-
-
-<style>
-    .hover-effect {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-radius: 10px;
-    }
-    
-    .hover-effect:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-    }
-    
-    .hero-section {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .hero-section::before {
-        content: "";
-        position: absolute;
-        top: -50px;
-        right: -50px;
-        width: 200px;
-        height: 200px;
-        background-color: var(--daktari-blue);
-        opacity: 0.1;
-        border-radius: 50%;
-    }
-    
-    .hero-section::after {
-        content: "";
-        position: absolute;
-        bottom: -30px;
-        left: -30px;
-        width: 150px;
-        height: 150px;
-        background-color: var(--daktari-pink);
-        opacity: 0.1;
-        border-radius: 50%;
-    }
-</style>
 
 {% endblock %}
